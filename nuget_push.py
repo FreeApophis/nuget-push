@@ -27,9 +27,8 @@ def _push_packages():
     _ENVVAR = 'NUGET_KEY'
     key = os.environ[_ENVVAR]
     if key is None:
-        print(
-            f'Error: The environment variable {_ENVVAR} has not been defined. Set its value to your NuGet API key. You can generate a key at https://www.nuget.org/account/apikeys',
-            file=sys.stderr)
+        _ERROR_MSG = f'Error: The environment variable {_ENVVAR} has not been defined. Set its value to your NuGet API key. You can generate a key at https://www.nuget.org/account/apikeys'
+        print(_ERROR_MSG, file=sys.stderr)
     for package in _get_packages():
         subprocess.check_call(['dotnet', 'nuget', 'push',
                                package, '-s', _SOURCE, '-k', key])
