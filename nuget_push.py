@@ -3,6 +3,7 @@
 import subprocess
 import os
 import glob
+import sys
 from typing import List
 
 
@@ -25,6 +26,10 @@ def _push_packages():
     _SOURCE = 'https://api.nuget.org/v3/index.json'
     _ENVVAR = 'NUGET_KEY'
     key = os.environ[_ENVVAR]
+    if key is None:
+        print(
+            f'Error: The environment variable {_ENVVAR} has not been defined. Set its value to your NuGet API key. You can generate a key at https://www.nuget.org/account/apikeys',
+            file=sys.stderr)
     for package in _get_packages():
         subprocess.check_call(['dotnet', 'nuget', 'push',
                                package, '-s', _SOURCE, '-k', key])
