@@ -5,11 +5,11 @@ import os
 import glob
 from typing import List
 
-_PACKAGE_ENDING = ".nupkg"
+_PACKAGE_ENDING = "nupkg"
 
 
 def _get_packages() -> List[str]:
-    return glob.iglob(f'*.{_PACKAGE_ENDING}')
+    return list(glob.iglob(os.path.join(".", f'*.{_PACKAGE_ENDING}')))
 
 
 def _clean_packages():
