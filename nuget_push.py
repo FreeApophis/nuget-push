@@ -19,7 +19,7 @@ def _clean_packages():
 
 def _build_packages():
     _CONFIGURATION = "Release"
-    subprocess.check_output(["dotnet", "pack", "-c", _CONFIGURATION])
+    subprocess.check_call(["dotnet", "pack", "-c", _CONFIGURATION])
 
 
 def _push_packages():
@@ -27,8 +27,8 @@ def _push_packages():
     _ENVVAR = "NUGET_KEY"
     key = os.environ[_ENVVAR]
     for package in _get_packages():
-        subprocess.check_output(["dotnet", "nuget", "push",
-                                 package, "-s", _SOURCE, "-k", key])
+        subprocess.check_call(["dotnet", "nuget", "push",
+                               package, "-s", _SOURCE, "-k", key])
 
 
 def push_all_packages():
