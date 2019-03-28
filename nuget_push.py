@@ -6,10 +6,11 @@ import glob
 import sys
 from typing import List
 
+_CONFIGURATION = 'Release'
 
 def _get_packages() -> List[str]:
     _PACKAGE_ENDING = 'nupkg'
-    return list(glob.iglob(os.path.join('.', '**', f'*.{_PACKAGE_ENDING}')))
+    return list(glob.iglob(os.path.join('.', '**', 'bin', _CONFIGURATION, f'*.{_PACKAGE_ENDING}')))
 
 
 def _clean_packages():
@@ -19,7 +20,6 @@ def _clean_packages():
 
 
 def _build_packages():
-    _CONFIGURATION = 'Release'
     subprocess.check_call(['dotnet', 'pack', '-c', _CONFIGURATION])
 
 
