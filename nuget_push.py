@@ -14,6 +14,7 @@ def _get_packages() -> List[str]:
 
 def _clean_packages():
     for package in _get_packages():
+        print(f'Removing old package at {package}')
         os.remove(package)
 
 
@@ -30,6 +31,7 @@ def _push_packages():
         _ERROR_MSG = f'Error: The environment variable {_ENVVAR} has not been defined. Set its value to your NuGet API key. You can generate a key at https://www.nuget.org/account/apikeys'
         print(_ERROR_MSG, file=sys.stderr)
     for package in _get_packages():
+        print(f'Pushing package at {package}')
         subprocess.check_call(['dotnet', 'nuget', 'push',
                                package, '-s', _SOURCE, '-k', key])
 
