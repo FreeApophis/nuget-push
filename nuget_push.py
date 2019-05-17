@@ -21,7 +21,7 @@ def _clean_packages():
 
 
 def _build_packages():
-    subprocess.check_call(['dotnet', 'pack', '-c', _CONFIGURATION])
+    subprocess.check_call([_dotnet_executable(), 'pack', '-c', _CONFIGURATION])
 
 
 def _is_git_repo() -> bool:
@@ -37,6 +37,9 @@ def _get_git_branch() -> str:
 def _is_on_master_branch() -> bool:
     return _get_git_branch() == 'master'
 
+def _dotnet_executable() -> str:
+    _DOTNET_EXECUTABLE = 'DOTNET'
+    return os.environ[_DOTNET_EXECUTABLE] if _DOTNET_EXECUTABLE in os.environ else 'dotnet'
 
 def _validate_environment():
     if _is_git_repo and not _is_on_master_branch():
@@ -55,7 +58,7 @@ def _push_packages():
         exit(1)
     for package in _get_packages():
         print(f'Pushing package at {package}')
-        subprocess.check_call(['dotnet', 'nuget', 'push',
+        subprocess.check_call([_dotnet_executable(), 'nuget', 'push',
                                package, '-s', _SOURCE, '-k', key])
 
 
